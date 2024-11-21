@@ -1,12 +1,12 @@
+# processes/fix_grammar.py
+
 import os
 from dotenv import load_dotenv, find_dotenv
 _ = load_dotenv(find_dotenv())
 
 from langchain.prompts import ChatPromptTemplate
-from langchain.chat_models import ChatOpenAI
-
-from langchain.chains import LLMChain
-
+from langchain.chat_models import ChatOpenAI  # Addressed in Deprecation Warnings
+from langchain_core.runnables import RunnableLambda
 
 def get_fix_grammar_chain():
     grammar_template_string = """
@@ -24,10 +24,11 @@ def get_fix_grammar_chain():
 
     grammar_prompt_template = ChatPromptTemplate.from_template(template=grammar_template_string)
 
-    # Define the language model
     chat_model = ChatOpenAI(temperature=0.0)
 
-    # Create and return the chain
-    grammar_chain = LLMChain(llm=chat_model, prompt=grammar_prompt_template)
-    
-    return grammar_chain
+    # Chain the prompt and model
+    fix_grammar_runnable = grammar_prompt_template | chat_model
+    # Modify the lambda to return a dict with 'output' key
+    fix_grammar_runnable = fix_grammar_runnable | RunnableLambda(lambda x: {"text": x.content.strip()})
+
+    return fix_grammar_runnable

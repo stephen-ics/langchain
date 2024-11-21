@@ -4,8 +4,7 @@ _ = load_dotenv(find_dotenv())
 
 from langchain.prompts import ChatPromptTemplate
 from langchain.chat_models import ChatOpenAI
-
-from langchain.chains import LLMChain
+from langchain_core.runnables import RunnableLambda
 
 def get_percentage_and_dollars_chain():
     fix_percent_and_dollar_template_string = """
@@ -20,12 +19,11 @@ def get_percentage_and_dollars_chain():
     ```{text}```
     """
 
-    grammar_prompt_template = ChatPromptTemplate.from_template(template=fix_percent_and_dollar_template_string)
+    fixed_percent_dollar_template = ChatPromptTemplate.from_template(template=fix_percent_and_dollar_template_string)
 
-    # Define the language model
     chat_model = ChatOpenAI(temperature=0.0)
 
-    # Create and return the chain
-    percent_and_dollar_chain = LLMChain(llm=chat_model, prompt=grammar_prompt_template)
+    percent_and_dollar_chain_runnable = fixed_percent_dollar_template | chat_model
+    percent_and_dollar_chain_runnable = percent_and_dollar_chain_runnable | RunnableLambda(lambda x: {"text": x.content.strip()})
     
-    return percent_and_dollar_chain
+    return percent_and_dollar_chain_runnable

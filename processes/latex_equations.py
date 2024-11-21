@@ -4,8 +4,7 @@ _ = load_dotenv(find_dotenv())
 
 from langchain.prompts import ChatPromptTemplate
 from langchain.chat_models import ChatOpenAI
-
-from langchain.chains import LLMChain
+from langchain_core.runnables import RunnableLambda
 
 def get_latex_word_equations_chain():
     latex_equation_template_string = """
@@ -28,5 +27,7 @@ def get_latex_word_equations_chain():
 
     chat_model = ChatOpenAI(temperature=0.0)
 
-    latex_equation_chain = LLMChain(llm=chat_model, prompt=latex_equation_prompt_template)
-    return latex_equation_chain
+    latex_equations_runnable = latex_equation_prompt_template | chat_model
+    latex_equations_runnable = latex_equations_runnable | RunnableLambda(lambda x: {"text": x.content.strip()})
+
+    return latex_equations_runnable
