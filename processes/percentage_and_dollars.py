@@ -7,12 +7,12 @@ from langchain.chat_models import ChatOpenAI
 
 from langchain.chains import LLMChain
 
-def fix_percentage_and_dollars(latex):
+def get_percentage_and_dollars_chain():
     fix_percent_and_dollar_template_string = """
     Please modify the following LaTeX text to properly format dollar amounts and percentages while preserving the rest of the text as-is. 
 
     The following rules apply:
-    1. Any dollar amounts (e.g., `$1000`) should be enclosed in LaTeX math mode and prefixed with a backslash, as `$\$1000$`.
+    1. Any dollar amounts (e.g., `$1000`) should be enclosed in LaTeX math mode and prefixed with a backslash, as `$\\$1000$`.
     2. Any percentages (e.g., `50%`) should be converted to LaTeX math mode as `$50\\%$`.
     3. Do not make any other changes to the text, including grammar, spelling, or non-math portions.
 
