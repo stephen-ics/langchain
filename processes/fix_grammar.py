@@ -7,7 +7,8 @@ from langchain.chat_models import ChatOpenAI
 
 from langchain.chains import LLMChain
 
-def get_fix_grammar_chain(latex):
+
+def get_fix_grammar_chain():
     grammar_template_string = """
     Please correct any grammar or spelling errors in the following text while preserving its meaning and tone. 
     The text to be corrected will be provided in backticks as shown below:
