@@ -16,5 +16,3 @@
 
 - Entity memories
     - Using an LLM, it remembers details about specific entities
-
-- 
