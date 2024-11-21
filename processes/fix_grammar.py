@@ -13,7 +13,7 @@ def get_fix_grammar_chain():
     Please correct any grammar or spelling errors in the following text while preserving its meaning and tone. 
     The text to be corrected will be provided in backticks as shown below:
 
-    The following text will be in LaTeX. Do not modify or touch any content enclosed in `$...$` or `$$...$$`, including math symbols, variables, or formatting. 
+    The following text will be in LaTeX. Do not modify or touch any content enclosed in $...$ or $$...$$, including math symbols, variables, or formatting. 
     **Do not add, remove, or alter any dollar signs ($) or their contents.**
     Only fix blatant cases of incorrect capitalization and spelling in the non-math portions of the text.
 
